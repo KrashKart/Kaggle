@@ -8,7 +8,7 @@ participating in beginner competitions as of now, but soon I might progress to h
 
 # Competitions and Rankings
 1. Spaceship Titanic:
-   a. Classification Accuracy on Test Set: 0.80102
-   b. Ranking: 624/2627
-2. Titanic: WIP
-3. Regression with a Mohs Dataset (Playground Series): WIP
+    a. Classification Accuracy on Test Set: 0.80102
+    b. Ranking: 624/2627
+3. Titanic: WIP
+4. Regression with a Mohs Dataset (Playground Series): WIP
