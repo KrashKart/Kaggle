@@ -1,5 +1,5 @@
 # Preface
-Hello! Welcome to my Kaggle repo. Here, I store all the notebooks that I have used in Kaggle Competitions.\
+Hello! Welcome to my Kaggle repo. Here, I store all the notebooks that I have used in Kaggle Competitions.
 
 Currently, I am a struggling Computer Science student in NUS and am an Kaggle Compeition Contributor. My next goal is to achieve a Bronze Medal in Competitions.
 
