@@ -7,8 +7,8 @@ I was hoping that spamming Kaggle competitions would be fun and interesting to t
 participating in beginner competitions as of now, but soon I might progress to harder ones.
 
 # Competitions and Rankings
-1. Spaceship Titanic:
+1. [Spaceship Titanic](https://www.kaggle.com/competitions/spaceship-titanic/overview):
     1. Classification Accuracy on Test Set: 0.80102
     2. Ranking: 624/2627
-3. Titanic: WIP
-4. Regression with a Mohs Dataset (Playground Series): WIP
+3. [Titanic](https://www.kaggle.com/competitions/titanic/overview): WIP
+4. [Regression with a Mohs Dataset](https://www.kaggle.com/competitions/playground-series-s3e25/overview) (Playground Series): WIP
