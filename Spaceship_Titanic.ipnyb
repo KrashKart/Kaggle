@@ -1,0 +1,983 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "d6e724b5",
+   "metadata": {
+    "papermill": {
+     "duration": 0.003999,
+     "end_time": "2023-12-04T06:17:26.233060",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:26.229061",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# Initial Loading\n",
+    "We first load in the dataset and conduct a rough inspection on the NA values and how the dataframe looks like generally."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "173a2dfe",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-12-04T06:17:26.242742Z",
+     "iopub.status.busy": "2023-12-04T06:17:26.242432Z",
+     "iopub.status.idle": "2023-12-04T06:17:27.430820Z",
+     "shell.execute_reply": "2023-12-04T06:17:27.429983Z"
+    },
+    "papermill": {
+     "duration": 1.194614,
+     "end_time": "2023-12-04T06:17:27.432497",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:26.237883",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>PassengerId</th>\n",
+       "      <th>HomePlanet</th>\n",
+       "      <th>CryoSleep</th>\n",
+       "      <th>Cabin</th>\n",
+       "      <th>Destination</th>\n",
+       "      <th>Age</th>\n",
+       "      <th>VIP</th>\n",
+       "      <th>RoomService</th>\n",
+       "      <th>FoodCourt</th>\n",
+       "      <th>ShoppingMall</th>\n",
+       "      <th>Spa</th>\n",
+       "      <th>VRDeck</th>\n",
+       "      <th>Name</th>\n",
+       "      <th>Transported</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0001_01</td>\n",
+       "      <td>Europa</td>\n",
+       "      <td>False</td>\n",
+       "      <td>B/0/P</td>\n",
+       "      <td>TRAPPIST-1e</td>\n",
+       "      <td>39.0</td>\n",
+       "      <td>False</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>Maham Ofracculy</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>0002_01</td>\n",
+       "      <td>Earth</td>\n",
+       "      <td>False</td>\n",
+       "      <td>F/0/S</td>\n",
+       "      <td>TRAPPIST-1e</td>\n",
+       "      <td>24.0</td>\n",
+       "      <td>False</td>\n",
+       "      <td>109.0</td>\n",
+       "      <td>9.0</td>\n",
+       "      <td>25.0</td>\n",
+       "      <td>549.0</td>\n",
+       "      <td>44.0</td>\n",
+       "      <td>Juanna Vines</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>0003_01</td>\n",
+       "      <td>Europa</td>\n",
+       "      <td>False</td>\n",
+       "      <td>A/0/S</td>\n",
+       "      <td>TRAPPIST-1e</td>\n",
+       "      <td>58.0</td>\n",
+       "      <td>True</td>\n",
+       "      <td>43.0</td>\n",
+       "      <td>3576.0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>6715.0</td>\n",
+       "      <td>49.0</td>\n",
+       "      <td>Altark Susent</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>0003_02</td>\n",
+       "      <td>Europa</td>\n",
+       "      <td>False</td>\n",
+       "      <td>A/0/S</td>\n",
+       "      <td>TRAPPIST-1e</td>\n",
+       "      <td>33.0</td>\n",
+       "      <td>False</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>1283.0</td>\n",
+       "      <td>371.0</td>\n",
+       "      <td>3329.0</td>\n",
+       "      <td>193.0</td>\n",
+       "      <td>Solam Susent</td>\n",
+       "      <td>False</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>0004_01</td>\n",
+       "      <td>Earth</td>\n",
+       "      <td>False</td>\n",
+       "      <td>F/1/S</td>\n",
+       "      <td>TRAPPIST-1e</td>\n",
+       "      <td>16.0</td>\n",
+       "      <td>False</td>\n",
+       "      <td>303.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>151.0</td>\n",
+       "      <td>565.0</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>Willy Santantines</td>\n",
+       "      <td>True</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "  PassengerId HomePlanet CryoSleep  Cabin  Destination   Age    VIP  \\\n",
+       "0     0001_01     Europa     False  B/0/P  TRAPPIST-1e  39.0  False   \n",
+       "1     0002_01      Earth     False  F/0/S  TRAPPIST-1e  24.0  False   \n",
+       "2     0003_01     Europa     False  A/0/S  TRAPPIST-1e  58.0   True   \n",
+       "3     0003_02     Europa     False  A/0/S  TRAPPIST-1e  33.0  False   \n",
+       "4     0004_01      Earth     False  F/1/S  TRAPPIST-1e  16.0  False   \n",
+       "\n",
+       "   RoomService  FoodCourt  ShoppingMall     Spa  VRDeck               Name  \\\n",
+       "0          0.0        0.0           0.0     0.0     0.0    Maham Ofracculy   \n",
+       "1        109.0        9.0          25.0   549.0    44.0       Juanna Vines   \n",
+       "2         43.0     3576.0           0.0  6715.0    49.0      Altark Susent   \n",
+       "3          0.0     1283.0         371.0  3329.0   193.0       Solam Susent   \n",
+       "4        303.0       70.0         151.0   565.0     2.0  Willy Santantines   \n",
+       "\n",
+       "   Transported  \n",
+       "0        False  \n",
+       "1         True  \n",
+       "2        False  \n",
+       "3        False  \n",
+       "4         True  "
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "from sklearn.preprocessing import StandardScaler\n",
+    "\n",
+    "tit = pd.read_csv(\"/kaggle/input/spaceship-titanic/train.csv\")\n",
+    "\n",
+    "tit.head(5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "177c1292",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-12-04T06:17:27.442076Z",
+     "iopub.status.busy": "2023-12-04T06:17:27.441455Z",
+     "iopub.status.idle": "2023-12-04T06:17:27.456488Z",
+     "shell.execute_reply": "2023-12-04T06:17:27.455478Z"
+    },
+    "papermill": {
+     "duration": 0.021565,
+     "end_time": "2023-12-04T06:17:27.458348",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:27.436783",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0       0\n",
+       "1       1\n",
+       "2       0\n",
+       "3       0\n",
+       "4       1\n",
+       "       ..\n",
+       "8688    0\n",
+       "8689    0\n",
+       "8690    1\n",
+       "8691    0\n",
+       "8692    1\n",
+       "Name: Transported, Length: 8693, dtype: int64"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "y = tit[\"Transported\"].map({True: 1, False: 0}).astype(int)\n",
+    "tit = tit.drop(columns=[\"Transported\"])\n",
+    "y"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "48b01354",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-12-04T06:17:27.467315Z",
+     "iopub.status.busy": "2023-12-04T06:17:27.467056Z",
+     "iopub.status.idle": "2023-12-04T06:17:27.487027Z",
+     "shell.execute_reply": "2023-12-04T06:17:27.485707Z"
+    },
+    "papermill": {
+     "duration": 0.026364,
+     "end_time": "2023-12-04T06:17:27.488737",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:27.462373",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 8693 entries, 0 to 8692\n",
+      "Data columns (total 13 columns):\n",
+      " #   Column        Non-Null Count  Dtype  \n",
+      "---  ------        --------------  -----  \n",
+      " 0   PassengerId   8693 non-null   object \n",
+      " 1   HomePlanet    8492 non-null   object \n",
+      " 2   CryoSleep     8476 non-null   object \n",
+      " 3   Cabin         8494 non-null   object \n",
+      " 4   Destination   8511 non-null   object \n",
+      " 5   Age           8514 non-null   float64\n",
+      " 6   VIP           8490 non-null   object \n",
+      " 7   RoomService   8512 non-null   float64\n",
+      " 8   FoodCourt     8510 non-null   float64\n",
+      " 9   ShoppingMall  8485 non-null   float64\n",
+      " 10  Spa           8510 non-null   float64\n",
+      " 11  VRDeck        8505 non-null   float64\n",
+      " 12  Name          8493 non-null   object \n",
+      "dtypes: float64(6), object(7)\n",
+      "memory usage: 883.0+ KB\n"
+     ]
+    }
+   ],
+   "source": [
+    "tit.info()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "9b5265ee",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-12-04T06:17:27.497879Z",
+     "iopub.status.busy": "2023-12-04T06:17:27.497572Z",
+     "iopub.status.idle": "2023-12-04T06:17:27.506721Z",
+     "shell.execute_reply": "2023-12-04T06:17:27.505990Z"
+    },
+    "papermill": {
+     "duration": 0.015562,
+     "end_time": "2023-12-04T06:17:27.508321",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:27.492759",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "PassengerId     False\n",
+       "HomePlanet       True\n",
+       "CryoSleep        True\n",
+       "Cabin            True\n",
+       "Destination      True\n",
+       "Age              True\n",
+       "VIP              True\n",
+       "RoomService      True\n",
+       "FoodCourt        True\n",
+       "ShoppingMall     True\n",
+       "Spa              True\n",
+       "VRDeck           True\n",
+       "Name             True\n",
+       "dtype: bool"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "tit.isna().any()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d296001c",
+   "metadata": {
+    "papermill": {
+     "duration": 0.003692,
+     "end_time": "2023-12-04T06:17:27.515971",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:27.512279",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# Cleaning\n",
+    "We plan to preprocess the data as such:\n",
+    "1. Split the \"Cabin\" column into the three components: the \"deck\", the \"number\" and the \"side\" (port/starboard)\n",
+    "2. Fill the NaNs in the categorical columns with the mode\n",
+    "3. Fill the NaNs in the continuous value columns with the mean/median\n",
+    "4. One-hot encode the categorical columns\n",
+    "5. Create a new column for total spending\n",
+    "6. Normalise all values with an sklearn.preprocessing.StandardScaler"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "3b42fe37",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-12-04T06:17:27.524997Z",
+     "iopub.status.busy": "2023-12-04T06:17:27.524694Z",
+     "iopub.status.idle": "2023-12-04T06:17:27.650083Z",
+     "shell.execute_reply": "2023-12-04T06:17:27.649253Z"
+    },
+    "papermill": {
+     "duration": 0.134738,
+     "end_time": "2023-12-04T06:17:27.654516",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:27.519778",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 8693 entries, 0 to 8692\n",
+      "Data columns (total 26 columns):\n",
+      " #   Column                     Non-Null Count  Dtype  \n",
+      "---  ------                     --------------  -----  \n",
+      " 0   CryoSleep                  8693 non-null   bool   \n",
+      " 1   Age                        8693 non-null   float64\n",
+      " 2   VIP                        8693 non-null   bool   \n",
+      " 3   RoomService                8693 non-null   float64\n",
+      " 4   FoodCourt                  8693 non-null   float64\n",
+      " 5   ShoppingMall               8693 non-null   float64\n",
+      " 6   Spa                        8693 non-null   float64\n",
+      " 7   VRDeck                     8693 non-null   float64\n",
+      " 8   num                        8693 non-null   object \n",
+      " 9   Destination_55 Cancri e    8693 non-null   int64  \n",
+      " 10  Destination_PSO J318.5-22  8693 non-null   int64  \n",
+      " 11  Destination_TRAPPIST-1e    8693 non-null   int64  \n",
+      " 12  HomePlanet_Earth           8693 non-null   int64  \n",
+      " 13  HomePlanet_Europa          8693 non-null   int64  \n",
+      " 14  HomePlanet_Mars            8693 non-null   int64  \n",
+      " 15  deck_A                     8693 non-null   int64  \n",
+      " 16  deck_B                     8693 non-null   int64  \n",
+      " 17  deck_C                     8693 non-null   int64  \n",
+      " 18  deck_D                     8693 non-null   int64  \n",
+      " 19  deck_E                     8693 non-null   int64  \n",
+      " 20  deck_F                     8693 non-null   int64  \n",
+      " 21  deck_G                     8693 non-null   int64  \n",
+      " 22  deck_T                     8693 non-null   int64  \n",
+      " 23  side_P                     8693 non-null   int64  \n",
+      " 24  side_S                     8693 non-null   int64  \n",
+      " 25  Total                      8693 non-null   float64\n",
+      "dtypes: bool(2), float64(7), int64(16), object(1)\n",
+      "memory usage: 1.6+ MB\n",
+      "None\n"
+     ]
+    }
+   ],
+   "source": [
+    "def preprocess(t, s=None):\n",
+    "    tit = t.copy() # preserve original\n",
+    "    \n",
+    "    # split cabin\n",
+    "    tit[[\"deck\", \"num\", \"side\"]] = tit[\"Cabin\"].str.split(\"/\", expand=True)\n",
+    "    \n",
+    "    # drop unwanted\n",
+    "    tit = tit.drop(columns=[\"PassengerId\", \"Cabin\", \"Name\"])\n",
+    "    \n",
+    "    # fill NaNs with mode\n",
+    "    mode_cols = ['HomePlanet', 'Destination', 'CryoSleep', 'VIP', \"deck\", \"num\", \"side\"]\n",
+    "    modes = tit[mode_cols].mode().iloc[0]\n",
+    "    tit[mode_cols]= tit[mode_cols].fillna(modes)\n",
+    "    \n",
+    "    # fill NaNs with median\n",
+    "    med_cols = ['Age', 'RoomService', 'FoodCourt', 'ShoppingMall', 'Spa', 'VRDeck']\n",
+    "    medians = tit[med_cols].median()\n",
+    "    tit[med_cols] = tit[med_cols].fillna(medians)\n",
+    "    \n",
+    "    # one-hot encode categorical columns\n",
+    "    tit = pd.get_dummies(tit, columns=[\"Destination\", \"HomePlanet\", \"deck\", \"side\"], dtype=int)\n",
+    "    \n",
+    "    # make total spending column\n",
+    "    tit[\"Total\"] = tit[['RoomService', 'FoodCourt', 'ShoppingMall', 'Spa', 'VRDeck']].sum(axis=1)\n",
+    "    transform_cols = ['RoomService', 'FoodCourt', 'ShoppingMall', 'Spa', 'VRDeck', \"Total\"]\n",
+    "    \n",
+    "    # standard scaler\n",
+    "    if s:\n",
+    "        st = s\n",
+    "        tit[transform_cols] = st.transform(tit[transform_cols])\n",
+    "    else:\n",
+    "        st = StandardScaler()\n",
+    "        tit[transform_cols] = st.fit_transform(tit[transform_cols])\n",
+    "    \n",
+    "    print(tit.info())\n",
+    "    return tit, st\n",
+    "\n",
+    "tit_final, _ = preprocess(tit);"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "becefbfa",
+   "metadata": {
+    "papermill": {
+     "duration": 0.003927,
+     "end_time": "2023-12-04T06:17:27.662987",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:27.659060",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# Looks good!\n",
+    "Now, we prepare the data for model training by converting it to an np.array"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "589d4fd1",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-12-04T06:17:27.672152Z",
+     "iopub.status.busy": "2023-12-04T06:17:27.671874Z",
+     "iopub.status.idle": "2023-12-04T06:17:27.682228Z",
+     "shell.execute_reply": "2023-12-04T06:17:27.681325Z"
+    },
+    "papermill": {
+     "duration": 0.016859,
+     "end_time": "2023-12-04T06:17:27.683833",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:27.666974",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(8693, 26)\n",
+      "(8693,)\n"
+     ]
+    }
+   ],
+   "source": [
+    "# convert tit_final to numpy array of X\n",
+    "X = tit_final.to_numpy()\n",
+    "\n",
+    "y = y.to_numpy()\n",
+    "print(X.shape)\n",
+    "print(y.shape)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "aa895175",
+   "metadata": {
+    "papermill": {
+     "duration": 0.003903,
+     "end_time": "2023-12-04T06:17:27.692102",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:27.688199",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# Model Selection\n",
+    "Now, we introduce a Voting Classifier consisting:\n",
+    "1. A LogisticRegression model from sklearn\n",
+    "2. A RandomForestClassifier from sklearn\n",
+    "3. An XGBoostClassifier (Gradient Boosted Tree Clasifier) from xgboost\n",
+    "\n",
+    "We will evaluate the performance of these models with a 5-fold cross-validation (cross_val_score) from sklearn"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "a3a56cbb",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-12-04T06:17:27.701624Z",
+     "iopub.status.busy": "2023-12-04T06:17:27.701162Z",
+     "iopub.status.idle": "2023-12-04T06:17:55.824191Z",
+     "shell.execute_reply": "2023-12-04T06:17:55.823338Z"
+    },
+    "papermill": {
+     "duration": 28.1298,
+     "end_time": "2023-12-04T06:17:55.825964",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:27.696164",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[0.75905693 0.76365727 0.80506038 0.83026467 0.79631761]\n",
+      "0.790871372314949\n"
+     ]
+    }
+   ],
+   "source": [
+    "from sklearn.model_selection import cross_val_score\n",
+    "from sklearn.linear_model import LogisticRegression\n",
+    "from sklearn.ensemble import RandomForestClassifier, VotingClassifier\n",
+    "from xgboost import XGBClassifier\n",
+    "\n",
+    "lr = LogisticRegression(penalty=\"l2\", solver=\"newton-cholesky\", max_iter=400, tol=1e-10, C=1.5)\n",
+    "rf = RandomForestClassifier(n_estimators=500, max_depth=10)\n",
+    "xgb = XGBClassifier(eta=0.05, max_depth=20, n_estimators=400, eval_metric=\"auc\", booster=\"gbtree\")\n",
+    "\n",
+    "model = VotingClassifier([(\"xgb\", xgb), (\"lr\", lr), (\"rf\", rf)], voting=\"soft\")\n",
+    "\n",
+    "# k-fold CV\n",
+    "scores = cross_val_score(model, X, y, cv=5)\n",
+    "print(scores)\n",
+    "print(scores.mean())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bd2c3335",
+   "metadata": {
+    "papermill": {
+     "duration": 0.003863,
+     "end_time": "2023-12-04T06:17:55.834095",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:55.830232",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# Model Training\n",
+    "Lastly, we will train the model on the whole dataset again to prepare for prediction with the test values"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "02d42f96",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-12-04T06:17:55.843461Z",
+     "iopub.status.busy": "2023-12-04T06:17:55.842980Z",
+     "iopub.status.idle": "2023-12-04T06:18:02.404707Z",
+     "shell.execute_reply": "2023-12-04T06:18:02.403776Z"
+    },
+    "papermill": {
+     "duration": 6.568334,
+     "end_time": "2023-12-04T06:18:02.406511",
+     "exception": false,
+     "start_time": "2023-12-04T06:17:55.838177",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: \"▸\";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: \"▾\";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: \"\";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: \"\";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: \"\";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id=\"sk-container-id-1\" class=\"sk-top-container\"><div class=\"sk-text-repr-fallback\"><pre>VotingClassifier(estimators=[(&#x27;xgb&#x27;,\n",
+       "                              XGBClassifier(base_score=None, booster=&#x27;gbtree&#x27;,\n",
+       "                                            callbacks=None,\n",
+       "                                            colsample_bylevel=None,\n",
+       "                                            colsample_bynode=None,\n",
+       "                                            colsample_bytree=None, device=None,\n",
+       "                                            early_stopping_rounds=None,\n",
+       "                                            enable_categorical=False, eta=0.05,\n",
+       "                                            eval_metric=&#x27;auc&#x27;,\n",
+       "                                            feature_types=None, gamma=None,\n",
+       "                                            grow_policy=None,\n",
+       "                                            importance_type=None,\n",
+       "                                            interaction_constraints=No...\n",
+       "                                            max_cat_to_onehot=None,\n",
+       "                                            max_delta_step=None, max_depth=20,\n",
+       "                                            max_leaves=None,\n",
+       "                                            min_child_weight=None, missing=nan,\n",
+       "                                            monotone_constraints=None,\n",
+       "                                            multi_strategy=None,\n",
+       "                                            n_estimators=400, n_jobs=None,\n",
+       "                                            num_parallel_tree=None, ...)),\n",
+       "                             (&#x27;lr&#x27;,\n",
+       "                              LogisticRegression(C=1.5, max_iter=400,\n",
+       "                                                 solver=&#x27;newton-cholesky&#x27;,\n",
+       "                                                 tol=1e-10)),\n",
+       "                             (&#x27;rf&#x27;,\n",
+       "                              RandomForestClassifier(max_depth=10,\n",
+       "                                                     n_estimators=500))],\n",
+       "                 voting=&#x27;soft&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class=\"sk-container\" hidden><div class=\"sk-item sk-dashed-wrapped\"><div class=\"sk-label-container\"><div class=\"sk-label sk-toggleable\"><input class=\"sk-toggleable__control sk-hidden--visually\" id=\"sk-estimator-id-1\" type=\"checkbox\" ><label for=\"sk-estimator-id-1\" class=\"sk-toggleable__label sk-toggleable__label-arrow\">VotingClassifier</label><div class=\"sk-toggleable__content\"><pre>VotingClassifier(estimators=[(&#x27;xgb&#x27;,\n",
+       "                              XGBClassifier(base_score=None, booster=&#x27;gbtree&#x27;,\n",
+       "                                            callbacks=None,\n",
+       "                                            colsample_bylevel=None,\n",
+       "                                            colsample_bynode=None,\n",
+       "                                            colsample_bytree=None, device=None,\n",
+       "                                            early_stopping_rounds=None,\n",
+       "                                            enable_categorical=False, eta=0.05,\n",
+       "                                            eval_metric=&#x27;auc&#x27;,\n",
+       "                                            feature_types=None, gamma=None,\n",
+       "                                            grow_policy=None,\n",
+       "                                            importance_type=None,\n",
+       "                                            interaction_constraints=No...\n",
+       "                                            max_cat_to_onehot=None,\n",
+       "                                            max_delta_step=None, max_depth=20,\n",
+       "                                            max_leaves=None,\n",
+       "                                            min_child_weight=None, missing=nan,\n",
+       "                                            monotone_constraints=None,\n",
+       "                                            multi_strategy=None,\n",
+       "                                            n_estimators=400, n_jobs=None,\n",
+       "                                            num_parallel_tree=None, ...)),\n",
+       "                             (&#x27;lr&#x27;,\n",
+       "                              LogisticRegression(C=1.5, max_iter=400,\n",
+       "                                                 solver=&#x27;newton-cholesky&#x27;,\n",
+       "                                                 tol=1e-10)),\n",
+       "                             (&#x27;rf&#x27;,\n",
+       "                              RandomForestClassifier(max_depth=10,\n",
+       "                                                     n_estimators=500))],\n",
+       "                 voting=&#x27;soft&#x27;)</pre></div></div></div><div class=\"sk-parallel\"><div class=\"sk-parallel-item\"><div class=\"sk-item\"><div class=\"sk-label-container\"><div class=\"sk-label sk-toggleable\"><label>xgb</label></div></div><div class=\"sk-serial\"><div class=\"sk-item\"><div class=\"sk-estimator sk-toggleable\"><input class=\"sk-toggleable__control sk-hidden--visually\" id=\"sk-estimator-id-2\" type=\"checkbox\" ><label for=\"sk-estimator-id-2\" class=\"sk-toggleable__label sk-toggleable__label-arrow\">XGBClassifier</label><div class=\"sk-toggleable__content\"><pre>XGBClassifier(base_score=None, booster=&#x27;gbtree&#x27;, callbacks=None,\n",
+       "              colsample_bylevel=None, colsample_bynode=None,\n",
+       "              colsample_bytree=None, device=None, early_stopping_rounds=None,\n",
+       "              enable_categorical=False, eta=0.05, eval_metric=&#x27;auc&#x27;,\n",
+       "              feature_types=None, gamma=None, grow_policy=None,\n",
+       "              importance_type=None, interaction_constraints=None,\n",
+       "              learning_rate=None, max_bin=None, max_cat_threshold=None,\n",
+       "              max_cat_to_onehot=None, max_delta_step=None, max_depth=20,\n",
+       "              max_leaves=None, min_child_weight=None, missing=nan,\n",
+       "              monotone_constraints=None, multi_strategy=None, n_estimators=400,\n",
+       "              n_jobs=None, num_parallel_tree=None, ...)</pre></div></div></div></div></div></div><div class=\"sk-parallel-item\"><div class=\"sk-item\"><div class=\"sk-label-container\"><div class=\"sk-label sk-toggleable\"><label>lr</label></div></div><div class=\"sk-serial\"><div class=\"sk-item\"><div class=\"sk-estimator sk-toggleable\"><input class=\"sk-toggleable__control sk-hidden--visually\" id=\"sk-estimator-id-3\" type=\"checkbox\" ><label for=\"sk-estimator-id-3\" class=\"sk-toggleable__label sk-toggleable__label-arrow\">LogisticRegression</label><div class=\"sk-toggleable__content\"><pre>LogisticRegression(C=1.5, max_iter=400, solver=&#x27;newton-cholesky&#x27;, tol=1e-10)</pre></div></div></div></div></div></div><div class=\"sk-parallel-item\"><div class=\"sk-item\"><div class=\"sk-label-container\"><div class=\"sk-label sk-toggleable\"><label>rf</label></div></div><div class=\"sk-serial\"><div class=\"sk-item\"><div class=\"sk-estimator sk-toggleable\"><input class=\"sk-toggleable__control sk-hidden--visually\" id=\"sk-estimator-id-4\" type=\"checkbox\" ><label for=\"sk-estimator-id-4\" class=\"sk-toggleable__label sk-toggleable__label-arrow\">RandomForestClassifier</label><div class=\"sk-toggleable__content\"><pre>RandomForestClassifier(max_depth=10, n_estimators=500)</pre></div></div></div></div></div></div></div></div></div></div>"
+      ],
+      "text/plain": [
+       "VotingClassifier(estimators=[('xgb',\n",
+       "                              XGBClassifier(base_score=None, booster='gbtree',\n",
+       "                                            callbacks=None,\n",
+       "                                            colsample_bylevel=None,\n",
+       "                                            colsample_bynode=None,\n",
+       "                                            colsample_bytree=None, device=None,\n",
+       "                                            early_stopping_rounds=None,\n",
+       "                                            enable_categorical=False, eta=0.05,\n",
+       "                                            eval_metric='auc',\n",
+       "                                            feature_types=None, gamma=None,\n",
+       "                                            grow_policy=None,\n",
+       "                                            importance_type=None,\n",
+       "                                            interaction_constraints=No...\n",
+       "                                            max_cat_to_onehot=None,\n",
+       "                                            max_delta_step=None, max_depth=20,\n",
+       "                                            max_leaves=None,\n",
+       "                                            min_child_weight=None, missing=nan,\n",
+       "                                            monotone_constraints=None,\n",
+       "                                            multi_strategy=None,\n",
+       "                                            n_estimators=400, n_jobs=None,\n",
+       "                                            num_parallel_tree=None, ...)),\n",
+       "                             ('lr',\n",
+       "                              LogisticRegression(C=1.5, max_iter=400,\n",
+       "                                                 solver='newton-cholesky',\n",
+       "                                                 tol=1e-10)),\n",
+       "                             ('rf',\n",
+       "                              RandomForestClassifier(max_depth=10,\n",
+       "                                                     n_estimators=500))],\n",
+       "                 voting='soft')"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "model.fit(X, y)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a399d296",
+   "metadata": {
+    "papermill": {
+     "duration": 0.004131,
+     "end_time": "2023-12-04T06:18:02.415215",
+     "exception": false,
+     "start_time": "2023-12-04T06:18:02.411084",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# Prediction\n",
+    "Here, we load the test values, preprocess them and package the predictions in the CSV files"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "8cf772eb",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-12-04T06:18:02.425503Z",
+     "iopub.status.busy": "2023-12-04T06:18:02.425026Z",
+     "iopub.status.idle": "2023-12-04T06:18:02.785748Z",
+     "shell.execute_reply": "2023-12-04T06:18:02.785096Z"
+    },
+    "papermill": {
+     "duration": 0.368213,
+     "end_time": "2023-12-04T06:18:02.787713",
+     "exception": false,
+     "start_time": "2023-12-04T06:18:02.419500",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 4277 entries, 0 to 4276\n",
+      "Data columns (total 26 columns):\n",
+      " #   Column                     Non-Null Count  Dtype  \n",
+      "---  ------                     --------------  -----  \n",
+      " 0   CryoSleep                  4277 non-null   bool   \n",
+      " 1   Age                        4277 non-null   float64\n",
+      " 2   VIP                        4277 non-null   bool   \n",
+      " 3   RoomService                4277 non-null   float64\n",
+      " 4   FoodCourt                  4277 non-null   float64\n",
+      " 5   ShoppingMall               4277 non-null   float64\n",
+      " 6   Spa                        4277 non-null   float64\n",
+      " 7   VRDeck                     4277 non-null   float64\n",
+      " 8   num                        4277 non-null   object \n",
+      " 9   Destination_55 Cancri e    4277 non-null   int64  \n",
+      " 10  Destination_PSO J318.5-22  4277 non-null   int64  \n",
+      " 11  Destination_TRAPPIST-1e    4277 non-null   int64  \n",
+      " 12  HomePlanet_Earth           4277 non-null   int64  \n",
+      " 13  HomePlanet_Europa          4277 non-null   int64  \n",
+      " 14  HomePlanet_Mars            4277 non-null   int64  \n",
+      " 15  deck_A                     4277 non-null   int64  \n",
+      " 16  deck_B                     4277 non-null   int64  \n",
+      " 17  deck_C                     4277 non-null   int64  \n",
+      " 18  deck_D                     4277 non-null   int64  \n",
+      " 19  deck_E                     4277 non-null   int64  \n",
+      " 20  deck_F                     4277 non-null   int64  \n",
+      " 21  deck_G                     4277 non-null   int64  \n",
+      " 22  deck_T                     4277 non-null   int64  \n",
+      " 23  side_P                     4277 non-null   int64  \n",
+      " 24  side_S                     4277 non-null   int64  \n",
+      " 25  Total                      4277 non-null   float64\n",
+      "dtypes: bool(2), float64(7), int64(16), object(1)\n",
+      "memory usage: 810.4+ KB\n",
+      "None\n",
+      "(4277, 26)\n"
+     ]
+    }
+   ],
+   "source": [
+    "# import\n",
+    "tet = pd.read_csv(\"/kaggle/input/spaceship-titanic/test.csv\")\n",
+    "ids = tet[\"PassengerId\"]\n",
+    "\n",
+    "tet_final, _ = preprocess(tet)\n",
+    "\n",
+    "# convert to numpy\n",
+    "X = tet_final.to_numpy()\n",
+    "print(X.shape)\n",
+    "\n",
+    "results = pd.Series(model.predict(X)).map({0: False, 1:True})\n",
+    "final = pd.concat([ids, results], axis=1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "9551b0e3",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-12-04T06:18:02.798269Z",
+     "iopub.status.busy": "2023-12-04T06:18:02.797998Z",
+     "iopub.status.idle": "2023-12-04T06:18:02.808731Z",
+     "shell.execute_reply": "2023-12-04T06:18:02.807947Z"
+    },
+    "papermill": {
+     "duration": 0.018258,
+     "end_time": "2023-12-04T06:18:02.810896",
+     "exception": false,
+     "start_time": "2023-12-04T06:18:02.792638",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "             Transported\n",
+      "PassengerId             \n",
+      "0013_01             True\n",
+      "0018_01            False\n",
+      "0019_01             True\n",
+      "0021_01             True\n",
+      "0023_01             True\n",
+      "-------------------------\n",
+      "Transported\n",
+      "False          2318\n",
+      "True           1959\n",
+      "Name: count, dtype: int64\n"
+     ]
+    }
+   ],
+   "source": [
+    "final = final.set_index(\"PassengerId\")\n",
+    "final = final.rename(columns={0: \"Transported\"})\n",
+    "final\n",
+    "print(final.head())\n",
+    "print(\"-\" * 25)\n",
+    "print(final.value_counts())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "81155dba",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-12-04T06:18:02.821632Z",
+     "iopub.status.busy": "2023-12-04T06:18:02.821385Z",
+     "iopub.status.idle": "2023-12-04T06:18:02.828688Z",
+     "shell.execute_reply": "2023-12-04T06:18:02.827915Z"
+    },
+    "papermill": {
+     "duration": 0.014312,
+     "end_time": "2023-12-04T06:18:02.830321",
+     "exception": false,
+     "start_time": "2023-12-04T06:18:02.816009",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "final.to_csv(\"final.csv\")"
+   ]
+  }
+ ],
+ "metadata": {
+  "kaggle": {
+   "accelerator": "none",
+   "dataSources": [
+    {
+     "databundleVersionId": 3220602,
+     "sourceId": 34377,
+     "sourceType": "competition"
+    }
+   ],
+   "dockerImageVersionId": 30587,
+   "isGpuEnabled": false,
+   "isInternetEnabled": true,
+   "language": "python",
+   "sourceType": "notebook"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.12"
+  },
+  "papermill": {
+   "default_parameters": {},
+   "duration": 39.485883,
+   "end_time": "2023-12-04T06:18:03.352734",
+   "environment_variables": {},
+   "exception": null,
+   "input_path": "__notebook__.ipynb",
+   "output_path": "__notebook__.ipynb",
+   "parameters": {},
+   "start_time": "2023-12-04T06:17:23.866851",
+   "version": "2.4.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
