@@ -9,8 +9,8 @@ participating in beginner competitions as of now, but soon I might progress to h
 # Competitions and Rankings
 1. [Spaceship Titanic](https://www.kaggle.com/competitions/spaceship-titanic/overview):
     * Classification accuracy: 0.80102
-    *  Top accuracy: 0.97077
-    *   anking: 624/2627
+    * Top accuracy: 0.97077
+    * Ranking: 624/2627
 2. [Titanic](https://www.kaggle.com/competitions/titanic/overview):
     * Classification accuracy on hidden test set: 0.77990
     * Top accuracy: 1.00000
