@@ -22,6 +22,6 @@ participating in beginner competitions as of now, but soon I might progress to h
     * Top MAE on public test dataset: 0.25000
     * Ranking: 1205/1635 :(
 4. [Multi-Class Prediction of Cirrhosis Outcomes](https://www.kaggle.com/competitions/playground-series-s3e26/overview) (Competitive):
-    * Logloss on public test set: 0.43624
-    * Top Logloss: 0.39648
-    * Ranking: 92/149
+    * Logloss on public test set: 0.42657
+    * Top Logloss: 0.39110
+    * Ranking: 397/709
